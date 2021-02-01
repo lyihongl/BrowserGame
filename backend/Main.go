@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
 
-func main(){
-	fmt.Printf("Hello world\n")
+	"./util"
+)
+
+func main() {
+	fmt.Println(util.GenerateRoomKey(6))
 }
