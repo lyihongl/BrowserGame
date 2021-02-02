@@ -29,6 +29,10 @@ function imageMatch(expectedFile, actualFile) {
     }
 }
 
+const testImagePath = (path) => {
+  return "./screenshots/"+path
+}
+
 return (async () => {
     try {
         const browser = await puppeteer.launch({
@@ -42,16 +46,16 @@ return (async () => {
         
         await page.waitForSelector('#excalibur-play', {visible: true});
         await page.waitForTimeout(1000); // give it a second
-        await page.screenshot({path: 'loaded.png'});
+        await page.screenshot({path: testImagePath('loaded.png')});
         
         const start = await page.$('#excalibur-play');
         await start.click();
-        await page.screenshot({path: 'play.png'});
+        await page.screenshot({path: testImagePath('play.png')});
 
         await browser.close();
 
-        imageMatch('./test/images/expected-loaded.png', 'loaded.png');
-        imageMatch('./test/images/expected-play.png', 'play.png');
+        imageMatch('./test/images/expected-loaded.png', testImagePath('loaded.png'));
+        imageMatch('./test/images/expected-play.png', testImagePath('play.png'));
         console.log('Test Success!');
 
     } finally {
