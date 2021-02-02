@@ -8,4 +8,5 @@ import (
 
 func main() {
 	fmt.Println(util.GenerateRoomKey(6))
+	fmt.Println(util.GenerateRoomKey(6))
 }
