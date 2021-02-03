@@ -11,7 +11,7 @@ import SocketIOClient from "socket.io-client";
 class Game extends Engine {
   private player: Player;
   private levelOne: LevelOne;
-  private socket: typeof SocketIOClient.Socket;
+  public socket: typeof SocketIOClient.Socket;
 
   constructor() {
     super({ displayMode: DisplayMode.FullScreen });
@@ -22,9 +22,13 @@ class Game extends Engine {
     this.levelOne = new LevelOne(this);
     this.player = new Player();
     this.levelOne.add(this.player);
-    this.socket = io("http://localhost:3000/socket.io");
+    this.socket = io.connect("http://localhost:3000/");
 
-    this.socket.emit("notice", "testing");
+    this.socket.on("connect", () => {
+      console.log("connected");
+      console.log(this.socket.connected);
+    });
+
     console.log(this.socket);
 
     //this.socket.open();
@@ -43,4 +47,5 @@ class Game extends Engine {
 const game = new Game();
 game.start().then(() => {
   game.goToScene("levelOne");
+  console.log(game.socket);
 });
